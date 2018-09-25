@@ -84,6 +84,8 @@ class CanvasWrapper:
         :param doodles:
         :return:
         """
+        self.c.delete('all')
+        self.side_info.delete_all()
         self.doodles = copy.deepcopy(doodles)
         self.doodle_id = doodles[-1].id+1
         for doodle in self.doodles:
@@ -111,4 +113,11 @@ class CanvasWrapper:
                 self.c.itemconfigure('doodle'+str(i), fill='blue')
             else:
                 self.c.itemconfigure('doodle'+str(i), fill='black')
+
+    def remove_doodle(self, did):
+        self.c.delete('doodle'+str(did))
+        for doodle in self.doodles:
+            if doodle.id == did:
+                self.doodles.remove(doodle)
+                break
 

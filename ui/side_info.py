@@ -15,6 +15,7 @@ class SideInfo:
         self.doodle_list = Listbox(master)
         self.doodle_list.grid(row=5, column=1)
         self.doodle_list.bind('<<ListboxSelect>>', self.handle_select)
+        self.doodle_list.bind('<Delete>',self.handle_delete)
         self.c_wrapper = None
         self.startButton = Button(master, text='开始绘制', command=self.handle_start).grid(row=0)
         self.finishButton = Button(master, text='结束绘制',command=self.handle_finish).grid(row=0,column=1)
@@ -77,5 +78,24 @@ class SideInfo:
         print(self.display_id.get())
         print(self.display_tag.get())
         self.c_wrapper.set_tag(self.display_id.get(), self.display_tag.get())
+
+    def handle_delete(self,*args):
+        """
+        该方法用于删除一条doodle记录
+        :param args:
+        :return:
+        """
+        index = self.doodle_list.curselection()[0]
+        info = self.doodle_list.get(index)
+        self.c_wrapper.remove_doodle(int(info.split('-')[0]))
+        self.doodle_list.delete(index)
+
+    def delete_all(self):
+        """
+        该方法用于清楚所有的doodle记录，当从文件中加载图形时要先清空画布
+        :return:
+        """
+        self.doodle_list.delete(0,self.doodle_list.size())
+
 
 

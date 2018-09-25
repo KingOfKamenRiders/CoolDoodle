@@ -18,6 +18,8 @@ class MenuWrapper:
 
     def open_file(self):
         doodles = self.doodle_service.get_doodle()
+        if doodles is None:
+            return
         self.c_wrapper.set_doodles(doodles)
 
     def save_file(self):
